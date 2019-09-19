@@ -44,11 +44,11 @@ var topics =["Bugs Bunny","Homer Simpson","Mickey Mouse","Popeye","Spider Man","
                   // Creating and storing an image tag
                   var characterImage = $("<img>");
                   // Setting the src attribute of the image to a property pulled off the result item
-                  characterImage.attr("src", results[i].images.fixed_height.url);
-                  characterImage.attr("data-type","still")
-                  var animateImage =$("<img>");
-                  animateImage.attr("src", results[i].images.fixed_height.url);
-                  animateImage.attr("data-type","animate")
+                  characterImage.attr("src", results[i].images.fixed_height_still.url);
+                  characterImage.attr("data-still",results[i].images.fixed_height_still.url);
+                  characterImage.attr("data-animate",results[i].images.fixed_height.url);
+                  characterImage.attr("data-state","still")
+
                   // Appending the paragraph and image tag to the animalDiv
                   characterDiv.append(p);
                   characterDiv.append(characterImage);
@@ -58,18 +58,19 @@ var topics =["Bugs Bunny","Homer Simpson","Mickey Mouse","Popeye","Spider Man","
 
                   $("img").on("click", function() {
                     // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
-                    var state = $(this).attr("data-type");
+                    var state = $(this).attr("data-state");
                     console.log(state);
                     // If the clicked image's state is still, update its src attribute to what its data-animate value is.
                     // Then, set the image's data-state to animate
                     // Else set src to the data-still value
                     if (state === "still") {
-                        
-                      $(this).attr("images", "fixed_height");
+                      $(this).attr("src", $(this).attr("data-animate"));
+                      $(this).attr("data-state", "animate");
                     } else {
-                        characterImage.attr("src", results[i].images.fixed_height_still.url);
-                      $(this).attr("images", "fixed_height");
+                      $(this).attr("src", $(this).attr("data-still"));
+                      $(this).attr("data-state", "still");
                     }
+              
                   });
               }
              });
